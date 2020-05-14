@@ -25,6 +25,10 @@ export default function verifierMiddleware(
       return process(req.body);
     }
 
+    if (typeof req.body === 'object') {
+      return process(JSON.stringify(req.body));
+    }
+    
     raw({ type: '*/*' })(req as any, res as any, async () => await process(req.body));
   };
 }
